@@ -13,9 +13,10 @@ Clone the repository and follow these steps:
 
 **For penetration testing usage**:
 >Do not use this on devices where you do not have permission to do so!
-* Download the .sh-file on the remote host (e.g. with wget).
-* execute it with ``` . install_run_v.sh``` or ``` source install_run_v.sh ```. This will install the V-Compiler and runs the shell.
+* Download the .sh-file on the remote host (e.g. with wget) (Linux-only).
+* Execute it with ``` bash install_run_v.sh```. This will install the V-Compiler and runs the shell (if root, Linux-only). If non root-user uses this, a precompiled binary will be downloaded and executed.
 * Connect to the specific port from local host (e.g. with netcat).
+* If you use Windows, just download and execute the precompiled binary.
 
 >Attention!
 Use "exit" to close the connection, CTRL-C will raise a V-panic.

