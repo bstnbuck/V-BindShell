@@ -1,6 +1,6 @@
 # V-BindShell
 
-> A small bind shell written in V, perfect only for penetration! I am not responsible against misuse of this program testing usage.
+> A small bind shell written in V, perfect for penetration testing! I am not responsible against misuse of this program.
 
 ### Requirements
 * Installed V-Compiler
@@ -17,6 +17,3 @@ Clone the repository and follow these steps:
 * Execute it with ``` bash install_run_v.sh```. This will install the V-Compiler and runs the shell (if root, Linux-only). If non root-user uses this, a precompiled binary will be downloaded and executed.
 * Connect to the specific port from local host (e.g. with netcat).
 * If you use Windows, just download and execute the precompiled binary.
-
->Attention!
-Use "exit" to close the connection, CTRL-C will raise a V-panic.
