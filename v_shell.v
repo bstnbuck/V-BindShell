@@ -21,7 +21,7 @@ fn handle_conn(mut conn net.TcpConn) ? {
 	mut exit := false
 	mut count := 0 // tcp timeout counter
 	for exit == false {
-		conn.write_str('vshell:$os.user_os()> ') ?
+		conn.write_string('vshell:$os.user_os()> ') ?
 		conn.wait_for_read() or {
 			count++
 			if count == 3 {
@@ -35,13 +35,13 @@ fn handle_conn(mut conn net.TcpConn) ? {
 		if buffer != 'exit\n' {
 			$if windows {
 				output := os.execute('cmd /c ' + buffer[..buffer.len - 1])
-				conn.write_str(output.str() + '\n') or { continue }
+				conn.write_string(output.str() + '\n') or { continue }
 			} $else {
 				output := os.execute(buffer)
-				conn.write_str(output.str() + '\n') or { continue }
+				conn.write_string(output.str() + '\n') or { continue }
 			}
 		} else {
-			conn.write_str('Bye\n') ?
+			conn.write_string('Bye\n') ?
 			exit = true
 		}
 	}
