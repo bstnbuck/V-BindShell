@@ -5,9 +5,8 @@ import os
 * use "exit" to close connection, use CTRL-C to close program on remote host
 */
 fn main() {
-	mut listener := net.listen_tcp(6666) ?
-	addr := listener.address() ?
-	println('Listen on: ' + addr.str())
+	mut listener := net.listen_tcp(.ip, ':6666') ?
+	listener.addr() ?
 
 	for {
 		mut conn := listener.accept() ?
@@ -29,7 +28,13 @@ fn handle_conn(mut conn net.TcpConn) ? {
 			}
 			continue
 		}
+
 		buffer := conn.read_line()
+
+		if buffer == '' {
+			exit = true
+			continue
+		}
 
 		// print(buffer)	// debugging
 		if buffer != 'exit\n' {
