@@ -8,7 +8,7 @@
 ### Usage
 **For debugging**:
 Clone the repository and follow these steps:
-* build ```v_shell.v``` with ``` v v_shell.v```
+* build ```v_shell.v``` with ``` v -prod -cc {gcc, msvc, tcc} v_shell.v```
 * run it and enjoy!
 
 **For penetration testing usage**:
